@@ -29,11 +29,6 @@ func TestSMA(t *testing.T) {
 	input := []float64{81.59, 81.06, 82.87, 83.00, 83.61, 83.15, 82.82,
 		83.99, 84.55, 84.36, 85.53, 86.54, 86.89, 87.77}
 
-	x := NewIndicatorData(len(input), 1)
-	x.Set([][]float64{input})
-	assert.Equal(t, input, x.Get()[0])
-	defer x.Destroy()
-
 	output, _, err := SMA(input, 5)
 	assert.NoError(t, err)
 	assert.Equal(t, fmt.Sprintf("%.2f", output[0]), "82.43")

@@ -4,11 +4,13 @@ package indicators
 //#include <stdio.h>
 //#include <stdlib.h>
 import "C"
-import "unsafe"
+import (
+	"unsafe"
+)
 
 const (
 	// https://dlintw.github.io/gobyexample/public/memory-and-sizeof.html
-	PtrSize    = 32 << uintptr(^uintptr(0)>>63)
+	PtrSize    = (32 << uintptr(^uintptr(0)>>63)) / 8
 	DoubleSize = C.sizeof_double
 )
 
@@ -39,8 +41,10 @@ func (io IndicatorData) Set(input [][]float64) {
 	if len(input) != io.rows {
 		panic("Set() with incorect shape")
 	}
-	if len(input[0]) != io.length {
-		panic("Set() with incorect shape")
+	for _, elmt := range input {
+		if len(elmt) != io.length {
+			panic("Set() with incorect shape")
+		}
 	}
 
 	for i := 0; i < io.rows; i++ {
@@ -69,8 +73,8 @@ func (io IndicatorData) Get() [][]float64 {
 
 func (io IndicatorData) Destroy() {
 	for i := 0; i < io.rows; i++ {
-		offset := (**C.double)(unsafe.Pointer(uintptr(unsafe.Pointer(io.buffer)) + uintptr(PtrSize*i)))
-		C.free(unsafe.Pointer(*offset))
+		offset := *(**C.double)(unsafe.Pointer(uintptr(unsafe.Pointer(io.buffer)) + uintptr(PtrSize*i)))
+		C.free(unsafe.Pointer(offset))
 	}
 	C.free(unsafe.Pointer(io.buffer))
 }
