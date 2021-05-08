@@ -7,8 +7,6 @@ import "C"
 import (
 	"fmt"
 	"unsafe"
-
-	"github.com/phsiao/tulipindicators-go/internal/datatype"
 )
 
 func print_array(p []float64, size int) {
@@ -31,7 +29,7 @@ func main() {
 	fmt.Printf("Our option array is: ")
 	print_array(options, len(options))
 
-	input := (*C.double)(datatype.FromArrayFloat64(options))
+	input := (*C.double)(&options[0])
 	start, err := C.ti_sma_start(input)
 	if err != nil {
 		panic(err.Error())
@@ -52,7 +50,7 @@ func main() {
 
 	ret, err := C.ti_sma((C.int)(input_length),
 		all_inputs,
-		(*C.double)(datatype.FromArrayFloat64(options)),
+		(*C.double)(&options[0]),
 		all_outputs)
 	if err != nil {
 		panic(err.Error())
