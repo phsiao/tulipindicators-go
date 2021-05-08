@@ -4,16 +4,20 @@ all: fmt vet test
 fmt:
 	@go fmt ./...
 
-vet:
+vet: build
 	@go vet ./...
 
-test:
-	@go test -race ./...
+test: build
+	@go test -race -cover ./...
 
-codegen:
+build:
 	(cd tulipindicators && make)
+
+codegen: build
 	@go run tools/codegen/main.go
-	(cd tulipindicators && make clean && rm -f rm example1 example2 fuzzer sample smoke)
 	make fmt
 
-.PHONY: all fmt vet test codegen
+clean:
+	(cd tulipindicators && make clean && rm -f rm example1 example2 fuzzer sample smoke)
+
+.PHONY: all fmt vet test codegen build clean
