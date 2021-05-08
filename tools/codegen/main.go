@@ -86,7 +86,7 @@ func index() []Indicator {
 
 func generateIndicators(indicators []Indicator) error {
 	for _, indicator := range indicators {
-		f, err := os.Create(fmt.Sprintf("pkg/indicators/%s.go", indicator.Identifier))
+		f, err := os.Create(fmt.Sprintf("indicators/%s.go", indicator.Identifier))
 		assertNoError(err)
 		defer f.Close()
 
@@ -107,7 +107,7 @@ func generateIndicators(indicators []Indicator) error {
 		fmt.Fprintf(f, "// %s\n", indicator.IndicatorName)
 		fmt.Fprintf(f, "package indicators\n\n")
 
-		fmt.Fprintf(f, "//#include \"../../tulipindicators/indicators/%s.c\"\n", indicator.Identifier)
+		fmt.Fprintf(f, "//#include \"../tulipindicators/indicators/%s.c\"\n", indicator.Identifier)
 		fmt.Fprintf(f, "import \"C\"\n")
 		fmt.Fprintf(f, "import \"fmt\"\n")
 		fmt.Fprintf(f, "\n")
