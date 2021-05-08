@@ -9,6 +9,11 @@ import (
 	"unsafe"
 )
 
+const (
+	// https://dlintw.github.io/gobyexample/public/memory-and-sizeof.html
+	PtrSize = 32 << uintptr(^uintptr(0)>>63)
+)
+
 func print_array(p []float64, size int) {
 	for i := 0; i < size; i++ {
 		if i > 0 {
@@ -42,11 +47,11 @@ func main() {
 	}
 	fmt.Printf("The output length is: %d\n", output_length)
 
-	all_inputs := (**C.double)(C.malloc(8))
+	all_inputs := (**C.double)(C.malloc(PtrSize * 1))
 	*all_inputs = (*C.double)(&data_in[0])
 
-	all_outputs := (**C.double)(C.malloc(8))
-	*all_outputs = (*C.double)(C.malloc((C.ulong)(8 * output_length)))
+	all_outputs := (**C.double)(C.malloc(PtrSize * 1))
+	*all_outputs = (*C.double)(C.malloc((C.ulong)(PtrSize * output_length)))
 
 	ret, err := C.ti_sma((C.int)(input_length),
 		all_inputs,
