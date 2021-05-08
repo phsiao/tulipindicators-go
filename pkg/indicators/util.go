@@ -1,8 +1,9 @@
 package indicators
 
-//#cgo LDFLAGS:
+//#cgo LDFLAGS: -lm
 //#include <stdio.h>
 //#include <stdlib.h>
+//#include "../../tulipindicators/utils/buffer.c"
 import "C"
 import (
 	"unsafe"

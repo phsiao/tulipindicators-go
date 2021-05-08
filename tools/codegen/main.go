@@ -107,7 +107,6 @@ func generateIndicators(indicators []Indicator) error {
 		fmt.Fprintf(f, "// %s\n", indicator.IndicatorName)
 		fmt.Fprintf(f, "package indicators\n\n")
 
-		fmt.Fprintf(f, "// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators \n")
 		fmt.Fprintf(f, "//#include \"../../tulipindicators/indicators/%s.c\"\n", indicator.Identifier)
 		fmt.Fprintf(f, "import \"C\"\n")
 		fmt.Fprintf(f, "import \"fmt\"\n")
