@@ -41,4 +41,6 @@ func TestADX(t *testing.T) {
 	assert.NoError(t, err)
 
 	assert.Equal(t, fmt.Sprintf("%.2f", output[0]), "41.38")
+	assert.Equal(t, fmt.Sprintf("%.2f", output[1]), "44.29")
+	assert.Equal(t, fmt.Sprintf("%.2f", output[2]), "49.42")
 }
