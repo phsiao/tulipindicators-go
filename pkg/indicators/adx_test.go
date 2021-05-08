@@ -37,7 +37,7 @@ func TestADX(t *testing.T) {
 			84.55, 84.36, 85.53, 86.65, 86.89, 87.77, 87.29},
 	}
 
-	output, _, err := ADX(input[0], input[1], input[2], 5)
+	output, err := ADX(input[0], input[1], input[2], 5)
 	assert.NoError(t, err)
 
 	assert.Equal(t, fmt.Sprintf("%.2f", output[0]), "41.38")

@@ -1,22 +1,18 @@
-// adx
-// Average Directional Movement Index
+// emv
+// Ease of Movement
 package indicators
 
 // #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators.h"
 //#include "../../tulipindicators/utils/buffer.h"
-//#include "../../tulipindicators/indicators/adx.c"
+//#include "../../tulipindicators/indicators/emv.c"
 import "C"
 import "fmt"
 
-func ADX(input1, input2, input3 []float64, options1 int) (output1 []float64, err error) {
+func EMV(input1, input2, input3 []float64) (output1 []float64, err error) {
 	input_length := len(input1)
-	options := []float64{float64(options1)}
-	option_input := (*C.double)(&options[0])
-	start, err := C.ti_adx_start(option_input)
-	if err != nil {
-		return
-	}
+	options := []float64{0}
+	start := 0
 
 	all_input_data := NewIndicatorData(input_length, 3)
 	all_input_data.Set([][]float64{input1, input2, input3})
@@ -25,7 +21,7 @@ func ADX(input1, input2, input3 []float64, options1 int) (output1 []float64, err
 	output_length := input_length - int(start)
 	all_output_data := NewIndicatorData(output_length, 1)
 	defer all_output_data.Destroy()
-	ret, err := C.ti_adx(
+	ret, err := C.ti_emv(
 		(C.int)(input_length),
 		(**C.double)(all_input_data.buffer),
 		(*C.double)(&options[0]),
