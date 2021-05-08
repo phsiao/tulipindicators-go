@@ -2,7 +2,6 @@
 // Vector Truncate
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/trunc.c"
 import "C"
 import "fmt"

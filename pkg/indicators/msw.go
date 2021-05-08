@@ -2,7 +2,6 @@
 // Mesa Sine Wave
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/msw.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Awesome Oscillator
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/ao.c"
 import "C"
 import "fmt"

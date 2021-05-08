@@ -2,7 +2,6 @@
 // Zero-Lag Exponential Moving Average
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/zlema.c"
 import "C"
 import "fmt"

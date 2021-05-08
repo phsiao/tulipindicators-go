@@ -2,7 +2,6 @@
 // Relative Strength Index
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/rsi.c"
 import "C"
 import "fmt"

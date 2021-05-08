@@ -2,7 +2,6 @@
 // Vector Arctangent
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/atan.c"
 import "C"
 import "fmt"

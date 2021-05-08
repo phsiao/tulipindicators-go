@@ -2,7 +2,6 @@
 // Williams Accumulation/Distribution
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/wad.c"
 import "C"
 import "fmt"

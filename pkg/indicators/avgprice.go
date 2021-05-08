@@ -2,7 +2,6 @@
 // Average Price
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/avgprice.c"
 import "C"
 import "fmt"

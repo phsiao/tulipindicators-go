@@ -2,7 +2,6 @@
 // Double Exponential Moving Average
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/dema.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Kaufman Adaptive Moving Average
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/kama.c"
 import "C"
 import "fmt"

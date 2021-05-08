@@ -2,7 +2,6 @@
 // Vector Hyperbolic Cosine
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/cosh.c"
 import "C"
 import "fmt"

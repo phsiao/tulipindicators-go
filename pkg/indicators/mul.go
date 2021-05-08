@@ -2,7 +2,6 @@
 // Vector Multiplication
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/mul.c"
 import "C"
 import "fmt"

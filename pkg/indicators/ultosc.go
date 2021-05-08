@@ -2,7 +2,6 @@
 // Ultimate Oscillator
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/ultosc.c"
 import "C"
 import "fmt"

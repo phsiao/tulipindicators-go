@@ -2,7 +2,6 @@
 // Hull Moving Average
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/hma.c"
 import "C"
 import "fmt"

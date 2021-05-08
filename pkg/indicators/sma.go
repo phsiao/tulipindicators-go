@@ -2,7 +2,6 @@
 // Simple Moving Average
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/sma.c"
 import "C"
 import "fmt"

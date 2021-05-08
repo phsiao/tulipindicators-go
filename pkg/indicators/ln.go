@@ -2,7 +2,6 @@
 // Vector Natural Log
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/ln.c"
 import "C"
 import "fmt"

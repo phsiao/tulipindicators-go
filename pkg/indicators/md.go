@@ -2,7 +2,6 @@
 // Mean Deviation Over Period
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/md.c"
 import "C"
 import "fmt"

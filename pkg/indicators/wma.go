@@ -2,7 +2,6 @@
 // Weighted Moving Average
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/wma.c"
 import "C"
 import "fmt"

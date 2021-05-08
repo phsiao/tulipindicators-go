@@ -2,7 +2,6 @@
 // Absolute Price Oscillator
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/apo.c"
 import "C"
 import "fmt"

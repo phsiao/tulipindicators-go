@@ -2,7 +2,6 @@
 // True Range
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/tr.c"
 import "C"
 import "fmt"

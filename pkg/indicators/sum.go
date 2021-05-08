@@ -2,7 +2,6 @@
 // Sum Over Period
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/sum.c"
 import "C"
 import "fmt"

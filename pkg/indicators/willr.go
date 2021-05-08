@@ -2,7 +2,6 @@
 // Williams %R
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/willr.c"
 import "C"
 import "fmt"

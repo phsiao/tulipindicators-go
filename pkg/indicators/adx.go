@@ -2,7 +2,6 @@
 // Average Directional Movement Index
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/adx.c"
 import "C"
 import "fmt"

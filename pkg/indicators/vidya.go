@@ -2,7 +2,6 @@
 // Variable Index Dynamic Average
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/vidya.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Volume Oscillator
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/vosc.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Qstick
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/qstick.c"
 import "C"
 import "fmt"

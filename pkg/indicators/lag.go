@@ -2,7 +2,6 @@
 // Lag
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/lag.c"
 import "C"
 import "fmt"

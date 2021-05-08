@@ -2,7 +2,6 @@
 // Vector Sine
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/sin.c"
 import "C"
 import "fmt"

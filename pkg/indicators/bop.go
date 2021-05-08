@@ -2,7 +2,6 @@
 // Balance of Power
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/bop.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Parabolic SAR
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/psar.c"
 import "C"
 import "fmt"

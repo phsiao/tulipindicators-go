@@ -2,7 +2,6 @@
 // Vector Hyperbolic Sine
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/sinh.c"
 import "C"
 import "fmt"

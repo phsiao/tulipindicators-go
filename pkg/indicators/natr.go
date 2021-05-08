@@ -2,7 +2,6 @@
 // Normalized Average True Range
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/natr.c"
 import "C"
 import "fmt"

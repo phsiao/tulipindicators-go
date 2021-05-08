@@ -2,7 +2,6 @@
 // Ease of Movement
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/emv.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Vector Base-10 Log
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/log10.c"
 import "C"
 import "fmt"

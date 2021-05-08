@@ -2,7 +2,6 @@
 // Standard Deviation Over Period
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/stddev.c"
 import "C"
 import "fmt"

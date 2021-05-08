@@ -2,7 +2,6 @@
 // Vector Ceiling
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/ceil.c"
 import "C"
 import "fmt"

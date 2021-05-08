@@ -2,7 +2,6 @@
 // Exponential Decay
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/edecay.c"
 import "C"
 import "fmt"

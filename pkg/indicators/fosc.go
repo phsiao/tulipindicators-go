@@ -2,7 +2,6 @@
 // Forecast Oscillator
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/fosc.c"
 import "C"
 import "fmt"

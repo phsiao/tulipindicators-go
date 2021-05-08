@@ -2,7 +2,6 @@
 // Vector Subtraction
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/sub.c"
 import "C"
 import "fmt"

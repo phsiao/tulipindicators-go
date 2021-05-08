@@ -2,7 +2,6 @@
 // Chande Momentum Oscillator
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/cmo.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Typical Price
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/typprice.c"
 import "C"
 import "fmt"

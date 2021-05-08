@@ -2,7 +2,6 @@
 // Standard Error Over Period
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/stderr.c"
 import "C"
 import "fmt"

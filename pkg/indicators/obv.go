@@ -2,7 +2,6 @@
 // On Balance Volume
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/obv.c"
 import "C"
 import "fmt"

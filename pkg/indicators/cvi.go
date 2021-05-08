@@ -2,7 +2,6 @@
 // Chaikins Volatility
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/cvi.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Weighted Close Price
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/wcprice.c"
 import "C"
 import "fmt"

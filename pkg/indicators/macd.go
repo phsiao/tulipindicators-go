@@ -2,7 +2,6 @@
 // Moving Average Convergence/Divergence
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/macd.c"
 import "C"
 import "fmt"

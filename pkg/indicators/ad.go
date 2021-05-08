@@ -2,7 +2,6 @@
 // Accumulation/Distribution Line
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/ad.c"
 import "C"
 import "fmt"

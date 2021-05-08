@@ -2,7 +2,6 @@
 // Vector Hyperbolic Tangent
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/tanh.c"
 import "C"
 import "fmt"

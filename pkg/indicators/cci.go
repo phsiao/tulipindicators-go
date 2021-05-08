@@ -2,7 +2,6 @@
 // Commodity Channel Index
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/cci.c"
 import "C"
 import "fmt"

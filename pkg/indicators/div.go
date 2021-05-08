@@ -2,7 +2,6 @@
 // Vector Division
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/div.c"
 import "C"
 import "fmt"

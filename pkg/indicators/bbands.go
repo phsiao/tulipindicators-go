@@ -2,7 +2,6 @@
 // Bollinger Bands
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/bbands.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Annualized Historical Volatility
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/volatility.c"
 import "C"
 import "fmt"

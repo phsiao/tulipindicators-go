@@ -2,7 +2,6 @@
 // Linear Decay
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/decay.c"
 import "C"
 import "fmt"

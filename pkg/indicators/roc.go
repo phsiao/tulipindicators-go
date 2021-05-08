@@ -2,7 +2,6 @@
 // Rate of Change
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/roc.c"
 import "C"
 import "fmt"

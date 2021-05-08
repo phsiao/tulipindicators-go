@@ -2,7 +2,6 @@
 // Vector Radian Conversion
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/torad.c"
 import "C"
 import "fmt"

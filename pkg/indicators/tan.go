@@ -2,7 +2,6 @@
 // Vector Tangent
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/tan.c"
 import "C"
 import "fmt"

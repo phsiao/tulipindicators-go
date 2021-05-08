@@ -2,7 +2,6 @@
 // Linear Regression
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/linreg.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Money Flow Index
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/mfi.c"
 import "C"
 import "fmt"

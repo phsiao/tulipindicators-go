@@ -2,7 +2,6 @@
 // Variance Over Period
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/var.c"
 import "C"
 import "fmt"

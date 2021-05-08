@@ -2,7 +2,6 @@
 // Vector Addition
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/add.c"
 import "C"
 import "fmt"

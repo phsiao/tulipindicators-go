@@ -2,7 +2,6 @@
 // Triple Exponential Moving Average
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/tema.c"
 import "C"
 import "fmt"

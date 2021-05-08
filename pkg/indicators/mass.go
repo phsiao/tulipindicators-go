@@ -2,7 +2,6 @@
 // Mass Index
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/mass.c"
 import "C"
 import "fmt"

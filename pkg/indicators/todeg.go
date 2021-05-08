@@ -2,7 +2,6 @@
 // Vector Degree Conversion
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/todeg.c"
 import "C"
 import "fmt"

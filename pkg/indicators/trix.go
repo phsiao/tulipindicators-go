@@ -2,7 +2,6 @@
 // Trix
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/trix.c"
 import "C"
 import "fmt"

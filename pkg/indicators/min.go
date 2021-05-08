@@ -2,7 +2,6 @@
 // Minimum In Period
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/min.c"
 import "C"
 import "fmt"

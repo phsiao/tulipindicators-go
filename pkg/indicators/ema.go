@@ -2,7 +2,6 @@
 // Exponential Moving Average
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/ema.c"
 import "C"
 import "fmt"

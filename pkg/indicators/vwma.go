@@ -2,7 +2,6 @@
 // Volume Weighted Moving Average
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/vwma.c"
 import "C"
 import "fmt"

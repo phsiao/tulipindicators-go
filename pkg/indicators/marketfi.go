@@ -2,7 +2,6 @@
 // Market Facilitation Index
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/marketfi.c"
 import "C"
 import "fmt"

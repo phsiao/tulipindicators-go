@@ -2,7 +2,6 @@
 // Median Price
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/medprice.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Vector Cosine
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/cos.c"
 import "C"
 import "fmt"

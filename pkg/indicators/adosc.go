@@ -2,7 +2,6 @@
 // Accumulation/Distribution Oscillator
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/adosc.c"
 import "C"
 import "fmt"

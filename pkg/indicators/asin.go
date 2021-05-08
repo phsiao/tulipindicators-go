@@ -2,7 +2,6 @@
 // Vector Arcsine
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/asin.c"
 import "C"
 import "fmt"

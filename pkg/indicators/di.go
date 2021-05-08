@@ -2,7 +2,6 @@
 // Directional Indicator
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/di.c"
 import "C"
 import "fmt"

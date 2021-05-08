@@ -2,7 +2,6 @@
 // Vertical Horizontal Filter
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/vhf.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Time Series Forecast
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/tsf.c"
 import "C"
 import "fmt"

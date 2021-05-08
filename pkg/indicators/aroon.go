@@ -2,7 +2,6 @@
 // Aroon
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/aroon.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Wilders Smoothing
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/wilders.c"
 import "C"
 import "fmt"

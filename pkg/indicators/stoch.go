@@ -2,7 +2,6 @@
 // Stochastic Oscillator
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/stoch.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Positive Volume Index
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/pvi.c"
 import "C"
 import "fmt"

@@ -2,7 +2,6 @@
 // Vector Square Root
 package indicators
 
-// #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
 //#include "../../tulipindicators/indicators/sqrt.c"
 import "C"
 import "fmt"
