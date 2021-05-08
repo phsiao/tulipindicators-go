@@ -3,8 +3,6 @@
 package indicators
 
 // #cgo LDFLAGS: -lm -L../../tulipindicators -lindicators
-//#include "../../tulipindicators/indicators.h"
-//#include "../../tulipindicators/utils/buffer.h"
 //#include "../../tulipindicators/indicators/kama.c"
 import "C"
 import "fmt"
