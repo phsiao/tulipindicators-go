@@ -5,14 +5,14 @@ package indicators
 import "C"
 import "fmt"
 
-func SMA(input []float64, period int) ([]float64, error) {
+func SMA(input []float64, period int) ([]float64, int, error) {
 	input_length := len(input)
 	options := []float64{float64(period)}
 
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_sma_start(option_input)
 	if err != nil {
-		return nil, err
+		return nil, int(start), err
 	}
 
 	all_input_data := NewIndicatorData(input_length, 1)
@@ -28,11 +28,11 @@ func SMA(input []float64, period int) ([]float64, error) {
 		(*C.double)(&options[0]),
 		(**C.double)(all_output_data.buffer))
 	if err != nil {
-		return nil, err
+		return nil, int(start), err
 	}
 	if ret != C.TI_OKAY {
-		return nil, fmt.Errorf("ret = %d", ret)
+		return nil, int(start), fmt.Errorf("ret = %d", ret)
 	}
 
-	return all_output_data.Get()[0], nil
+	return all_output_data.Get()[0], int(start), nil
 }

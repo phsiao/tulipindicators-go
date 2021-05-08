@@ -34,7 +34,7 @@ func TestSMA(t *testing.T) {
 	assert.Equal(t, input, x.Get()[0])
 	defer x.Destroy()
 
-	output, err := SMA(input, 5)
+	output, _, err := SMA(input, 5)
 	assert.NoError(t, err)
 	assert.Equal(t, fmt.Sprintf("%.2f", output[0]), "82.43")
 	assert.Equal(t, fmt.Sprintf("%.2f", output[1]), "82.74")
