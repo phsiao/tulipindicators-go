@@ -1,22 +1,23 @@
-// wad
-// Williams Accumulation/Distribution
 package indicators
 
 //#include "../tulipindicators/indicators/wad.c"
 import "C"
 import "fmt"
 
-func WAD(input1, input2, input3 []float64) (output1 []float64, err error) {
-	input_length := len(input1)
+// WAD function wraps `wad' function that provides "Williams Accumulation/Distribution"
+//
+// Reference: https://tulipindicators.org/wad
+func WAD(high, low, close []float64) (wad []float64, err error) {
+	input_length := len(high)
 	options := []float64{0}
 	start := 0
 
-	all_input_data := NewIndicatorData(input_length, 3)
-	all_input_data.Set([][]float64{input1, input2, input3})
+	all_input_data := newIndicatorData(input_length, 3)
+	all_input_data.Set([][]float64{high, low, close})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
-	all_output_data := NewIndicatorData(output_length, 1)
+	all_output_data := newIndicatorData(output_length, 1)
 	defer all_output_data.Destroy()
 	ret, err := C.ti_wad(
 		(C.int)(input_length),
@@ -33,6 +34,6 @@ func WAD(input1, input2, input3 []float64) (output1 []float64, err error) {
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
+	wad = outputs[0]
 	return
 }

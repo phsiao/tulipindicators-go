@@ -1,5 +1,4 @@
-// tulipindicators-go codegen from
-// https://tulipindicators.org/list
+// Generate wrapped go functions from https://tulipindicators.org/list
 package main
 
 import (
@@ -15,7 +14,8 @@ import (
 )
 
 const (
-	IndexURL = "https://tulipindicators.org/list"
+	IndexURL        = "https://tulipindicators.org/list"
+	FunctionURLBase = "https://tulipindicators.org/"
 )
 
 func assertNoError(e error) {
@@ -84,27 +84,90 @@ func index() []Indicator {
 	return indicators
 }
 
+func sanitizeTokens(tokens []string) []string {
+	rval := tokens
+	for i, t := range rval {
+		rval[i] = strings.ReplaceAll(t, " ", "_")
+		rval[i] = strings.ReplaceAll(rval[i], "%", "pct")
+		switch t {
+		case "var":
+			rval[i] = "var_"
+		case "real":
+			if len(tokens) > 1 {
+				rval[i] = fmt.Sprintf("real%d", i+1)
+			}
+		}
+	}
+	return rval
+}
+
+func getParameterNameMap(indicator string) (inputs, options, outputs []string, err error) {
+	u, err := url.Parse(FunctionURLBase)
+	assertNoError(err)
+	u.Path = indicator
+
+	resp, err := http.Get(u.String())
+	assertNoError(err)
+	defer resp.Body.Close()
+
+	doc, err := goquery.NewDocumentFromReader(resp.Body)
+	assertNoError(err)
+
+	doc.Find("code").Each(func(i int, s *goquery.Selection) {
+		if i != 0 {
+			return
+		}
+		blob := s.Text()
+		lines := strings.Split(blob, "\n")
+		var nInputs, nOptions, nOutputs int
+		_, err = fmt.Sscanf(lines[2], "/* Input arrays: %d    Options: %d    Output arrays: %d */",
+			&nInputs, &nOptions, &nOutputs)
+		assertNoError(err)
+
+		var tokens []string
+		inputLine := lines[3]
+		inputLine = inputLine[len("/* Inputs: ") : len(inputLine)-len(" */")]
+		tokens = strings.Split(inputLine, ", ")
+		inputs = sanitizeTokens(tokens)
+
+		optionLine := lines[4]
+		optionLine = optionLine[len("/* Options: ") : len(optionLine)-len(" */")]
+		tokens = strings.Split(optionLine, ", ")
+		options = sanitizeTokens(tokens)
+
+		outputLine := lines[5]
+		outputLine = outputLine[len("/* Outputs: ") : len(outputLine)-len(" */")]
+		tokens = strings.Split(outputLine, ", ")
+		outputs = sanitizeTokens(tokens)
+	})
+
+	return
+}
+
 func generateIndicators(indicators []Indicator) error {
 	for _, indicator := range indicators {
 		f, err := os.Create(fmt.Sprintf("indicators/%s.go", indicator.Identifier))
 		assertNoError(err)
 		defer f.Close()
 
-		inputs := []string{}
-		for idx := 0; idx < indicator.Inputs; idx++ {
-			inputs = append(inputs, fmt.Sprintf("input%d", idx+1))
-		}
-		options := []string{}
-		for idx := 0; idx < indicator.Options; idx++ {
-			options = append(options, fmt.Sprintf("options%d", idx+1))
-		}
-		outputs := []string{}
-		for idx := 0; idx < indicator.Outputs; idx++ {
-			outputs = append(outputs, fmt.Sprintf("output%d", idx+1))
-		}
+		inputs, options, outputs, err := getParameterNameMap(indicator.Identifier)
+		assertNoError(err)
 
-		fmt.Fprintf(f, "// %s\n", indicator.Identifier)
-		fmt.Fprintf(f, "// %s\n", indicator.IndicatorName)
+		/*
+			inputs := []string{}
+			for idx := 0; idx < indicator.Inputs; idx++ {
+				inputs = append(inputs, fmt.Sprintf("input%d", idx+1))
+			}
+			options := []string{}
+			for idx := 0; idx < indicator.Options; idx++ {
+				options = append(options, fmt.Sprintf("option%d", idx+1))
+			}
+			outputs := []string{}
+			for idx := 0; idx < indicator.Outputs; idx++ {
+				outputs = append(outputs, fmt.Sprintf("output%d", idx+1))
+			}
+		*/
+
 		fmt.Fprintf(f, "package indicators\n\n")
 
 		fmt.Fprintf(f, "//#include \"../tulipindicators/indicators/%s.c\"\n", indicator.Identifier)
@@ -112,6 +175,11 @@ func generateIndicators(indicators []Indicator) error {
 		fmt.Fprintf(f, "import \"fmt\"\n")
 		fmt.Fprintf(f, "\n")
 
+		fmt.Fprintf(f, "// %s function wraps `%s' function that provides \"%s\"\n//\n",
+			strings.ToUpper(indicator.Identifier),
+			indicator.Identifier,
+			indicator.IndicatorName)
+		fmt.Fprintf(f, "// Reference: https://tulipindicators.org/%s\n", indicator.Identifier)
 		if indicator.Options > 0 {
 			fmt.Fprintf(f, "func %s(%s []float64, %s int) (%s []float64, err error) {\n",
 				strings.ToUpper(indicator.Identifier),
@@ -127,7 +195,7 @@ func generateIndicators(indicators []Indicator) error {
 			)
 		}
 
-		fmt.Fprintf(f, "\tinput_length := len(input1)\n")
+		fmt.Fprintf(f, "\tinput_length := len(%s)\n", inputs[0])
 
 		if indicator.Options > 0 {
 			floatOptions := []string{}
@@ -146,12 +214,12 @@ func generateIndicators(indicators []Indicator) error {
 		}
 
 		fmt.Fprintf(f, "\n")
-		fmt.Fprintf(f, "\tall_input_data := NewIndicatorData(input_length, %d)\n", indicator.Inputs)
+		fmt.Fprintf(f, "\tall_input_data := newIndicatorData(input_length, %d)\n", indicator.Inputs)
 		fmt.Fprintf(f, "\tall_input_data.Set([][]float64{%s})\n", strings.Join(inputs, ","))
 		fmt.Fprintf(f, "\tdefer all_input_data.Destroy()\n")
 		fmt.Fprintf(f, "\n")
 		fmt.Fprintf(f, "\toutput_length := input_length - int(start)\n")
-		fmt.Fprintf(f, "\tall_output_data := NewIndicatorData(output_length, %d)\n", indicator.Outputs)
+		fmt.Fprintf(f, "\tall_output_data := newIndicatorData(output_length, %d)\n", indicator.Outputs)
 		fmt.Fprintf(f, "\tdefer all_output_data.Destroy()\n")
 
 		fmt.Fprintf(f, "\tret, err := C.ti_%s(\n"+

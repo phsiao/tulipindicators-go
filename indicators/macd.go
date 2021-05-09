@@ -1,26 +1,27 @@
-// macd
-// Moving Average Convergence/Divergence
 package indicators
 
 //#include "../tulipindicators/indicators/macd.c"
 import "C"
 import "fmt"
 
-func MACD(input1 []float64, options1, options2, options3 int) (output1, output2, output3 []float64, err error) {
-	input_length := len(input1)
-	options := []float64{float64(options1), float64(options2), float64(options3)}
+// MACD function wraps `macd' function that provides "Moving Average Convergence/Divergence"
+//
+// Reference: https://tulipindicators.org/macd
+func MACD(real []float64, short_period, long_period, signal_period int) (macd, macd_signal, macd_histogram []float64, err error) {
+	input_length := len(real)
+	options := []float64{float64(short_period), float64(long_period), float64(signal_period)}
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_macd_start(option_input)
 	if err != nil {
 		return
 	}
 
-	all_input_data := NewIndicatorData(input_length, 1)
-	all_input_data.Set([][]float64{input1})
+	all_input_data := newIndicatorData(input_length, 1)
+	all_input_data.Set([][]float64{real})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
-	all_output_data := NewIndicatorData(output_length, 3)
+	all_output_data := newIndicatorData(output_length, 3)
 	defer all_output_data.Destroy()
 	ret, err := C.ti_macd(
 		(C.int)(input_length),
@@ -37,8 +38,8 @@ func MACD(input1 []float64, options1, options2, options3 int) (output1, output2,
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
-	output2 = outputs[1]
-	output3 = outputs[2]
+	macd = outputs[0]
+	macd_signal = outputs[1]
+	macd_histogram = outputs[2]
 	return
 }

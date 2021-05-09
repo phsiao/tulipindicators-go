@@ -1,22 +1,23 @@
-// bop
-// Balance of Power
 package indicators
 
 //#include "../tulipindicators/indicators/bop.c"
 import "C"
 import "fmt"
 
-func BOP(input1, input2, input3, input4 []float64) (output1 []float64, err error) {
-	input_length := len(input1)
+// BOP function wraps `bop' function that provides "Balance of Power"
+//
+// Reference: https://tulipindicators.org/bop
+func BOP(open, high, low, close []float64) (bop []float64, err error) {
+	input_length := len(open)
 	options := []float64{0}
 	start := 0
 
-	all_input_data := NewIndicatorData(input_length, 4)
-	all_input_data.Set([][]float64{input1, input2, input3, input4})
+	all_input_data := newIndicatorData(input_length, 4)
+	all_input_data.Set([][]float64{open, high, low, close})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
-	all_output_data := NewIndicatorData(output_length, 1)
+	all_output_data := newIndicatorData(output_length, 1)
 	defer all_output_data.Destroy()
 	ret, err := C.ti_bop(
 		(C.int)(input_length),
@@ -33,6 +34,6 @@ func BOP(input1, input2, input3, input4 []float64) (output1 []float64, err error
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
+	bop = outputs[0]
 	return
 }

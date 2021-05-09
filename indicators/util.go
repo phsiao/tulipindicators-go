@@ -11,26 +11,26 @@ import (
 
 const (
 	// https://dlintw.github.io/gobyexample/public/memory-and-sizeof.html
-	PtrSize    = (32 << uintptr(^uintptr(0)>>63)) / 8
-	DoubleSize = C.sizeof_double
+	ptrSize    = (32 << uintptr(^uintptr(0)>>63)) / 8
+	doubleSize = C.sizeof_double
 )
 
-type IndicatorData struct {
+type indicatorData struct {
 	length int
 	rows   int
 	buffer unsafe.Pointer
 }
 
-func NewIndicatorData(output_length int, rows int) IndicatorData {
-	rval := IndicatorData{
+func newIndicatorData(output_length int, rows int) indicatorData {
+	rval := indicatorData{
 		length: output_length,
 		rows:   rows,
 	}
 
-	buffer := C.malloc((C.ulong)(PtrSize * rval.rows))
+	buffer := C.malloc((C.ulong)(ptrSize * rval.rows))
 	for i := 0; i < rval.rows; i++ {
-		offset := unsafe.Pointer(uintptr(unsafe.Pointer(buffer)) + uintptr(PtrSize*i))
-		*(**C.double)(offset) = (*C.double)(C.malloc((C.ulong)(DoubleSize * rval.length)))
+		offset := unsafe.Pointer(uintptr(unsafe.Pointer(buffer)) + uintptr(ptrSize*i))
+		*(**C.double)(offset) = (*C.double)(C.malloc((C.ulong)(doubleSize * rval.length)))
 	}
 
 	rval.buffer = buffer
@@ -38,7 +38,7 @@ func NewIndicatorData(output_length int, rows int) IndicatorData {
 	return rval
 }
 
-func (io IndicatorData) Set(input [][]float64) {
+func (io indicatorData) Set(input [][]float64) {
 	if len(input) != io.rows {
 		panic("Set() with incorect shape")
 	}
@@ -49,32 +49,32 @@ func (io IndicatorData) Set(input [][]float64) {
 	}
 
 	for i := 0; i < io.rows; i++ {
-		offset := *(**C.double)(unsafe.Pointer(uintptr(io.buffer) + uintptr(PtrSize*i)))
+		offset := *(**C.double)(unsafe.Pointer(uintptr(io.buffer) + uintptr(ptrSize*i)))
 		for j := 0; j < io.length; j++ {
-			elmt_addr := unsafe.Pointer(uintptr(unsafe.Pointer(offset)) + uintptr(j*DoubleSize))
+			elmt_addr := unsafe.Pointer(uintptr(unsafe.Pointer(offset)) + uintptr(j*doubleSize))
 			(*(*C.double)(elmt_addr)) = (C.double)(input[i][j])
 		}
 	}
 }
 
-func (io IndicatorData) Get() [][]float64 {
+func (io indicatorData) Get() [][]float64 {
 	rval := make([][]float64, io.rows)
 	for i := 0; i < io.rows; i++ {
 		rval[i] = make([]float64, io.length)
-		offset := *(**C.double)(unsafe.Pointer(uintptr(io.buffer) + uintptr(PtrSize*i)))
+		offset := *(**C.double)(unsafe.Pointer(uintptr(io.buffer) + uintptr(ptrSize*i)))
 		for j := 0; j < io.length; j++ {
 			rval[i][j] = (*(*float64)(
 				unsafe.Pointer(
-					(uintptr(unsafe.Pointer(offset)) + uintptr(j*DoubleSize)),
+					(uintptr(unsafe.Pointer(offset)) + uintptr(j*doubleSize)),
 				)))
 		}
 	}
 	return rval
 }
 
-func (io IndicatorData) Destroy() {
+func (io indicatorData) Destroy() {
 	for i := 0; i < io.rows; i++ {
-		offset := *(**C.double)(unsafe.Pointer(uintptr(unsafe.Pointer(io.buffer)) + uintptr(PtrSize*i)))
+		offset := *(**C.double)(unsafe.Pointer(uintptr(unsafe.Pointer(io.buffer)) + uintptr(ptrSize*i)))
 		C.free(unsafe.Pointer(offset))
 	}
 	C.free(unsafe.Pointer(io.buffer))

@@ -1,26 +1,27 @@
-// vidya
-// Variable Index Dynamic Average
 package indicators
 
 //#include "../tulipindicators/indicators/vidya.c"
 import "C"
 import "fmt"
 
-func VIDYA(input1 []float64, options1, options2, options3 int) (output1 []float64, err error) {
-	input_length := len(input1)
-	options := []float64{float64(options1), float64(options2), float64(options3)}
+// VIDYA function wraps `vidya' function that provides "Variable Index Dynamic Average"
+//
+// Reference: https://tulipindicators.org/vidya
+func VIDYA(real []float64, short_period, long_period, alpha int) (vidya []float64, err error) {
+	input_length := len(real)
+	options := []float64{float64(short_period), float64(long_period), float64(alpha)}
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_vidya_start(option_input)
 	if err != nil {
 		return
 	}
 
-	all_input_data := NewIndicatorData(input_length, 1)
-	all_input_data.Set([][]float64{input1})
+	all_input_data := newIndicatorData(input_length, 1)
+	all_input_data.Set([][]float64{real})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
-	all_output_data := NewIndicatorData(output_length, 1)
+	all_output_data := newIndicatorData(output_length, 1)
 	defer all_output_data.Destroy()
 	ret, err := C.ti_vidya(
 		(C.int)(input_length),
@@ -37,6 +38,6 @@ func VIDYA(input1 []float64, options1, options2, options3 int) (output1 []float6
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
+	vidya = outputs[0]
 	return
 }
