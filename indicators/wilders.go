@@ -7,9 +7,9 @@ import "fmt"
 // WILDERS function wraps `wilders' function that provides "Wilders Smoothing"
 //
 // Reference: https://tulipindicators.org/wilders
-func WILDERS(input1 []float64, option1 int) (output1 []float64, err error) {
-	input_length := len(input1)
-	options := []float64{float64(option1)}
+func WILDERS(real []float64, period int) (wilders []float64, err error) {
+	input_length := len(real)
+	options := []float64{float64(period)}
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_wilders_start(option_input)
 	if err != nil {
@@ -17,7 +17,7 @@ func WILDERS(input1 []float64, option1 int) (output1 []float64, err error) {
 	}
 
 	all_input_data := newIndicatorData(input_length, 1)
-	all_input_data.Set([][]float64{input1})
+	all_input_data.Set([][]float64{real})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
@@ -38,6 +38,6 @@ func WILDERS(input1 []float64, option1 int) (output1 []float64, err error) {
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
+	wilders = outputs[0]
 	return
 }

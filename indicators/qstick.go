@@ -7,9 +7,9 @@ import "fmt"
 // QSTICK function wraps `qstick' function that provides "Qstick"
 //
 // Reference: https://tulipindicators.org/qstick
-func QSTICK(input1, input2 []float64, option1 int) (output1 []float64, err error) {
-	input_length := len(input1)
-	options := []float64{float64(option1)}
+func QSTICK(open, close []float64, period int) (qstick []float64, err error) {
+	input_length := len(open)
+	options := []float64{float64(period)}
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_qstick_start(option_input)
 	if err != nil {
@@ -17,7 +17,7 @@ func QSTICK(input1, input2 []float64, option1 int) (output1 []float64, err error
 	}
 
 	all_input_data := newIndicatorData(input_length, 2)
-	all_input_data.Set([][]float64{input1, input2})
+	all_input_data.Set([][]float64{open, close})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
@@ -38,6 +38,6 @@ func QSTICK(input1, input2 []float64, option1 int) (output1 []float64, err error
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
+	qstick = outputs[0]
 	return
 }

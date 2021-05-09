@@ -7,13 +7,13 @@ import "fmt"
 // AD function wraps `ad' function that provides "Accumulation/Distribution Line"
 //
 // Reference: https://tulipindicators.org/ad
-func AD(input1, input2, input3, input4 []float64) (output1 []float64, err error) {
-	input_length := len(input1)
+func AD(high, low, close, volume []float64) (ad []float64, err error) {
+	input_length := len(high)
 	options := []float64{0}
 	start := 0
 
 	all_input_data := newIndicatorData(input_length, 4)
-	all_input_data.Set([][]float64{input1, input2, input3, input4})
+	all_input_data.Set([][]float64{high, low, close, volume})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
@@ -34,6 +34,6 @@ func AD(input1, input2, input3, input4 []float64) (output1 []float64, err error)
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
+	ad = outputs[0]
 	return
 }

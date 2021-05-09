@@ -7,9 +7,9 @@ import "fmt"
 // ROCR function wraps `rocr' function that provides "Rate of Change Ratio"
 //
 // Reference: https://tulipindicators.org/rocr
-func ROCR(input1 []float64, option1 int) (output1 []float64, err error) {
-	input_length := len(input1)
-	options := []float64{float64(option1)}
+func ROCR(real []float64, period int) (rocr []float64, err error) {
+	input_length := len(real)
+	options := []float64{float64(period)}
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_rocr_start(option_input)
 	if err != nil {
@@ -17,7 +17,7 @@ func ROCR(input1 []float64, option1 int) (output1 []float64, err error) {
 	}
 
 	all_input_data := newIndicatorData(input_length, 1)
-	all_input_data.Set([][]float64{input1})
+	all_input_data.Set([][]float64{real})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
@@ -38,6 +38,6 @@ func ROCR(input1 []float64, option1 int) (output1 []float64, err error) {
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
+	rocr = outputs[0]
 	return
 }

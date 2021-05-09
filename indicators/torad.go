@@ -7,13 +7,13 @@ import "fmt"
 // TORAD function wraps `torad' function that provides "Vector Radian Conversion"
 //
 // Reference: https://tulipindicators.org/torad
-func TORAD(input1 []float64) (output1 []float64, err error) {
-	input_length := len(input1)
+func TORAD(real []float64) (radians []float64, err error) {
+	input_length := len(real)
 	options := []float64{0}
 	start := 0
 
 	all_input_data := newIndicatorData(input_length, 1)
-	all_input_data.Set([][]float64{input1})
+	all_input_data.Set([][]float64{real})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
@@ -34,6 +34,6 @@ func TORAD(input1 []float64) (output1 []float64, err error) {
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
+	radians = outputs[0]
 	return
 }

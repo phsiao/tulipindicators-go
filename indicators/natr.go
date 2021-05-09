@@ -7,9 +7,9 @@ import "fmt"
 // NATR function wraps `natr' function that provides "Normalized Average True Range"
 //
 // Reference: https://tulipindicators.org/natr
-func NATR(input1, input2, input3 []float64, option1 int) (output1 []float64, err error) {
-	input_length := len(input1)
-	options := []float64{float64(option1)}
+func NATR(high, low, close []float64, period int) (natr []float64, err error) {
+	input_length := len(high)
+	options := []float64{float64(period)}
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_natr_start(option_input)
 	if err != nil {
@@ -17,7 +17,7 @@ func NATR(input1, input2, input3 []float64, option1 int) (output1 []float64, err
 	}
 
 	all_input_data := newIndicatorData(input_length, 3)
-	all_input_data.Set([][]float64{input1, input2, input3})
+	all_input_data.Set([][]float64{high, low, close})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
@@ -38,6 +38,6 @@ func NATR(input1, input2, input3 []float64, option1 int) (output1 []float64, err
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
+	natr = outputs[0]
 	return
 }

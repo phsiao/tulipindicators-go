@@ -7,13 +7,13 @@ import "fmt"
 // TODEG function wraps `todeg' function that provides "Vector Degree Conversion"
 //
 // Reference: https://tulipindicators.org/todeg
-func TODEG(input1 []float64) (output1 []float64, err error) {
-	input_length := len(input1)
+func TODEG(real []float64) (degrees []float64, err error) {
+	input_length := len(real)
 	options := []float64{0}
 	start := 0
 
 	all_input_data := newIndicatorData(input_length, 1)
-	all_input_data.Set([][]float64{input1})
+	all_input_data.Set([][]float64{real})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
@@ -34,6 +34,6 @@ func TODEG(input1 []float64) (output1 []float64, err error) {
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
+	degrees = outputs[0]
 	return
 }

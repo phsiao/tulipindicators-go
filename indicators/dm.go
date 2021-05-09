@@ -7,9 +7,9 @@ import "fmt"
 // DM function wraps `dm' function that provides "Directional Movement"
 //
 // Reference: https://tulipindicators.org/dm
-func DM(input1, input2 []float64, option1 int) (output1, output2 []float64, err error) {
-	input_length := len(input1)
-	options := []float64{float64(option1)}
+func DM(high, low []float64, period int) (plus_dm, minus_dm []float64, err error) {
+	input_length := len(high)
+	options := []float64{float64(period)}
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_dm_start(option_input)
 	if err != nil {
@@ -17,7 +17,7 @@ func DM(input1, input2 []float64, option1 int) (output1, output2 []float64, err 
 	}
 
 	all_input_data := newIndicatorData(input_length, 2)
-	all_input_data.Set([][]float64{input1, input2})
+	all_input_data.Set([][]float64{high, low})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
@@ -38,7 +38,7 @@ func DM(input1, input2 []float64, option1 int) (output1, output2 []float64, err 
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
-	output2 = outputs[1]
+	plus_dm = outputs[0]
+	minus_dm = outputs[1]
 	return
 }

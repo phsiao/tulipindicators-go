@@ -7,9 +7,9 @@ import "fmt"
 // MSW function wraps `msw' function that provides "Mesa Sine Wave"
 //
 // Reference: https://tulipindicators.org/msw
-func MSW(input1 []float64, option1 int) (output1, output2 []float64, err error) {
-	input_length := len(input1)
-	options := []float64{float64(option1)}
+func MSW(real []float64, period int) (msw_sine, msw_lead []float64, err error) {
+	input_length := len(real)
+	options := []float64{float64(period)}
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_msw_start(option_input)
 	if err != nil {
@@ -17,7 +17,7 @@ func MSW(input1 []float64, option1 int) (output1, output2 []float64, err error) 
 	}
 
 	all_input_data := newIndicatorData(input_length, 1)
-	all_input_data.Set([][]float64{input1})
+	all_input_data.Set([][]float64{real})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
@@ -38,7 +38,7 @@ func MSW(input1 []float64, option1 int) (output1, output2 []float64, err error) 
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
-	output2 = outputs[1]
+	msw_sine = outputs[0]
+	msw_lead = outputs[1]
 	return
 }

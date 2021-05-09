@@ -7,9 +7,9 @@ import "fmt"
 // ADOSC function wraps `adosc' function that provides "Accumulation/Distribution Oscillator"
 //
 // Reference: https://tulipindicators.org/adosc
-func ADOSC(input1, input2, input3, input4 []float64, option1, option2 int) (output1 []float64, err error) {
-	input_length := len(input1)
-	options := []float64{float64(option1), float64(option2)}
+func ADOSC(high, low, close, volume []float64, short_period, long_period int) (adosc []float64, err error) {
+	input_length := len(high)
+	options := []float64{float64(short_period), float64(long_period)}
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_adosc_start(option_input)
 	if err != nil {
@@ -17,7 +17,7 @@ func ADOSC(input1, input2, input3, input4 []float64, option1, option2 int) (outp
 	}
 
 	all_input_data := newIndicatorData(input_length, 4)
-	all_input_data.Set([][]float64{input1, input2, input3, input4})
+	all_input_data.Set([][]float64{high, low, close, volume})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
@@ -38,6 +38,6 @@ func ADOSC(input1, input2, input3, input4 []float64, option1, option2 int) (outp
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
+	adosc = outputs[0]
 	return
 }

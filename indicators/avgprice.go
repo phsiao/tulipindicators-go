@@ -7,13 +7,13 @@ import "fmt"
 // AVGPRICE function wraps `avgprice' function that provides "Average Price"
 //
 // Reference: https://tulipindicators.org/avgprice
-func AVGPRICE(input1, input2, input3, input4 []float64) (output1 []float64, err error) {
-	input_length := len(input1)
+func AVGPRICE(open, high, low, close []float64) (avgprice []float64, err error) {
+	input_length := len(open)
 	options := []float64{0}
 	start := 0
 
 	all_input_data := newIndicatorData(input_length, 4)
-	all_input_data.Set([][]float64{input1, input2, input3, input4})
+	all_input_data.Set([][]float64{open, high, low, close})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
@@ -34,6 +34,6 @@ func AVGPRICE(input1, input2, input3, input4 []float64) (output1 []float64, err 
 		return
 	}
 	outputs := all_output_data.Get()
-	output1 = outputs[0]
+	avgprice = outputs[0]
 	return
 }
