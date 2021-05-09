@@ -1,5 +1,4 @@
-// tulipindicators-go codegen from
-// https://tulipindicators.org/list
+// Generate wrapped go functions from https://tulipindicators.org/list
 package main
 
 import (
@@ -96,15 +95,13 @@ func generateIndicators(indicators []Indicator) error {
 		}
 		options := []string{}
 		for idx := 0; idx < indicator.Options; idx++ {
-			options = append(options, fmt.Sprintf("options%d", idx+1))
+			options = append(options, fmt.Sprintf("option%d", idx+1))
 		}
 		outputs := []string{}
 		for idx := 0; idx < indicator.Outputs; idx++ {
 			outputs = append(outputs, fmt.Sprintf("output%d", idx+1))
 		}
 
-		fmt.Fprintf(f, "// %s\n", indicator.Identifier)
-		fmt.Fprintf(f, "// %s\n", indicator.IndicatorName)
 		fmt.Fprintf(f, "package indicators\n\n")
 
 		fmt.Fprintf(f, "//#include \"../tulipindicators/indicators/%s.c\"\n", indicator.Identifier)
@@ -112,6 +109,11 @@ func generateIndicators(indicators []Indicator) error {
 		fmt.Fprintf(f, "import \"fmt\"\n")
 		fmt.Fprintf(f, "\n")
 
+		fmt.Fprintf(f, "// %s function wraps `%s' function that provides \"%s\"\n//\n",
+			strings.ToUpper(indicator.Identifier),
+			indicator.Identifier,
+			indicator.IndicatorName)
+		fmt.Fprintf(f, "// Reference: https://tulipindicators.org/%s\n", indicator.Identifier)
 		if indicator.Options > 0 {
 			fmt.Fprintf(f, "func %s(%s []float64, %s int) (%s []float64, err error) {\n",
 				strings.ToUpper(indicator.Identifier),
@@ -146,12 +148,12 @@ func generateIndicators(indicators []Indicator) error {
 		}
 
 		fmt.Fprintf(f, "\n")
-		fmt.Fprintf(f, "\tall_input_data := NewIndicatorData(input_length, %d)\n", indicator.Inputs)
+		fmt.Fprintf(f, "\tall_input_data := newIndicatorData(input_length, %d)\n", indicator.Inputs)
 		fmt.Fprintf(f, "\tall_input_data.Set([][]float64{%s})\n", strings.Join(inputs, ","))
 		fmt.Fprintf(f, "\tdefer all_input_data.Destroy()\n")
 		fmt.Fprintf(f, "\n")
 		fmt.Fprintf(f, "\toutput_length := input_length - int(start)\n")
-		fmt.Fprintf(f, "\tall_output_data := NewIndicatorData(output_length, %d)\n", indicator.Outputs)
+		fmt.Fprintf(f, "\tall_output_data := newIndicatorData(output_length, %d)\n", indicator.Outputs)
 		fmt.Fprintf(f, "\tdefer all_output_data.Destroy()\n")
 
 		fmt.Fprintf(f, "\tret, err := C.ti_%s(\n"+

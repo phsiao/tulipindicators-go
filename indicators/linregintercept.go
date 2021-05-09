@@ -1,26 +1,27 @@
-// linregintercept
-// Linear Regression Intercept
 package indicators
 
 //#include "../tulipindicators/indicators/linregintercept.c"
 import "C"
 import "fmt"
 
-func LINREGINTERCEPT(input1 []float64, options1 int) (output1 []float64, err error) {
+// LINREGINTERCEPT function wraps `linregintercept' function that provides "Linear Regression Intercept"
+//
+// Reference: https://tulipindicators.org/linregintercept
+func LINREGINTERCEPT(input1 []float64, option1 int) (output1 []float64, err error) {
 	input_length := len(input1)
-	options := []float64{float64(options1)}
+	options := []float64{float64(option1)}
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_linregintercept_start(option_input)
 	if err != nil {
 		return
 	}
 
-	all_input_data := NewIndicatorData(input_length, 1)
+	all_input_data := newIndicatorData(input_length, 1)
 	all_input_data.Set([][]float64{input1})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
-	all_output_data := NewIndicatorData(output_length, 1)
+	all_output_data := newIndicatorData(output_length, 1)
 	defer all_output_data.Destroy()
 	ret, err := C.ti_linregintercept(
 		(C.int)(input_length),

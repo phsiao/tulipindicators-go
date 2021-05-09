@@ -1,26 +1,27 @@
-// ultosc
-// Ultimate Oscillator
 package indicators
 
 //#include "../tulipindicators/indicators/ultosc.c"
 import "C"
 import "fmt"
 
-func ULTOSC(input1, input2, input3 []float64, options1, options2, options3 int) (output1 []float64, err error) {
+// ULTOSC function wraps `ultosc' function that provides "Ultimate Oscillator"
+//
+// Reference: https://tulipindicators.org/ultosc
+func ULTOSC(input1, input2, input3 []float64, option1, option2, option3 int) (output1 []float64, err error) {
 	input_length := len(input1)
-	options := []float64{float64(options1), float64(options2), float64(options3)}
+	options := []float64{float64(option1), float64(option2), float64(option3)}
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_ultosc_start(option_input)
 	if err != nil {
 		return
 	}
 
-	all_input_data := NewIndicatorData(input_length, 3)
+	all_input_data := newIndicatorData(input_length, 3)
 	all_input_data.Set([][]float64{input1, input2, input3})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
-	all_output_data := NewIndicatorData(output_length, 1)
+	all_output_data := newIndicatorData(output_length, 1)
 	defer all_output_data.Destroy()
 	ret, err := C.ti_ultosc(
 		(C.int)(input_length),

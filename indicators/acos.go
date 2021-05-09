@@ -1,22 +1,23 @@
-// acos
-// Vector Arccosine
 package indicators
 
 //#include "../tulipindicators/indicators/acos.c"
 import "C"
 import "fmt"
 
+// ACOS function wraps `acos' function that provides "Vector Arccosine"
+//
+// Reference: https://tulipindicators.org/acos
 func ACOS(input1 []float64) (output1 []float64, err error) {
 	input_length := len(input1)
 	options := []float64{0}
 	start := 0
 
-	all_input_data := NewIndicatorData(input_length, 1)
+	all_input_data := newIndicatorData(input_length, 1)
 	all_input_data.Set([][]float64{input1})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
-	all_output_data := NewIndicatorData(output_length, 1)
+	all_output_data := newIndicatorData(output_length, 1)
 	defer all_output_data.Destroy()
 	ret, err := C.ti_acos(
 		(C.int)(input_length),

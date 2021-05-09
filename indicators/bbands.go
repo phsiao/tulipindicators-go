@@ -1,26 +1,27 @@
-// bbands
-// Bollinger Bands
 package indicators
 
 //#include "../tulipindicators/indicators/bbands.c"
 import "C"
 import "fmt"
 
-func BBANDS(input1 []float64, options1, options2 int) (output1, output2, output3 []float64, err error) {
+// BBANDS function wraps `bbands' function that provides "Bollinger Bands"
+//
+// Reference: https://tulipindicators.org/bbands
+func BBANDS(input1 []float64, option1, option2 int) (output1, output2, output3 []float64, err error) {
 	input_length := len(input1)
-	options := []float64{float64(options1), float64(options2)}
+	options := []float64{float64(option1), float64(option2)}
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_bbands_start(option_input)
 	if err != nil {
 		return
 	}
 
-	all_input_data := NewIndicatorData(input_length, 1)
+	all_input_data := newIndicatorData(input_length, 1)
 	all_input_data.Set([][]float64{input1})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
-	all_output_data := NewIndicatorData(output_length, 3)
+	all_output_data := newIndicatorData(output_length, 3)
 	defer all_output_data.Destroy()
 	ret, err := C.ti_bbands(
 		(C.int)(input_length),

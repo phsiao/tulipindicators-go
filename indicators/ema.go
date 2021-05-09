@@ -1,26 +1,27 @@
-// ema
-// Exponential Moving Average
 package indicators
 
 //#include "../tulipindicators/indicators/ema.c"
 import "C"
 import "fmt"
 
-func EMA(input1 []float64, options1 int) (output1 []float64, err error) {
+// EMA function wraps `ema' function that provides "Exponential Moving Average"
+//
+// Reference: https://tulipindicators.org/ema
+func EMA(input1 []float64, option1 int) (output1 []float64, err error) {
 	input_length := len(input1)
-	options := []float64{float64(options1)}
+	options := []float64{float64(option1)}
 	option_input := (*C.double)(&options[0])
 	start, err := C.ti_ema_start(option_input)
 	if err != nil {
 		return
 	}
 
-	all_input_data := NewIndicatorData(input_length, 1)
+	all_input_data := newIndicatorData(input_length, 1)
 	all_input_data.Set([][]float64{input1})
 	defer all_input_data.Destroy()
 
 	output_length := input_length - int(start)
-	all_output_data := NewIndicatorData(output_length, 1)
+	all_output_data := newIndicatorData(output_length, 1)
 	defer all_output_data.Destroy()
 	ret, err := C.ti_ema(
 		(C.int)(input_length),
